@@ -1,0 +1,23 @@
+Done :
+- Auth bootstrap
+- Spatie Laravel
+- Role Seeder
+- User Seeder
+- add template
+- import template
+- login, navbar, sidebar, header, footer
+
+
+Note :
+- Kalo atur redirect di login controller
+
+
+
+
+
+
+Step install :
+- Git clone
+- composer update
+- npm update
+- ganti judul apps di env.appName

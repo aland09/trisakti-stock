@@ -1,0 +1,9 @@
+https://www.youtube.com/watch?v=JU4hQILRKog&t=863s
+Spatie :
+
+step instalasi laravel jalanin semua
+bikin roleSeeder
+bikin userSeeder
+atur page after login di login controller 
+masukin middleware di dokumentasi
+setting role pas regist di regist controller
