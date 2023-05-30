@@ -39,7 +39,7 @@
         </div>
         <ul class="nav flex-column pt-3 pt-md-0">
             <li class="nav-item">
-                <a href="#!" class="nav-link d-flex align-items-center">
+                <a href="#!" class="py-3 px-3 h4 fw-bolder d-flex align-items-center">
                     {{-- <span class="sidebar-icon">
                         <img src="{{ asset('assets/img/logo/pemprov_dki.png') }}" height="30" width="30"
                             alt="Volt Logo">
@@ -65,18 +65,12 @@
                 </li>
             @endrole
             @role('admin')
-                <li class="nav-item {{ Request::is(['dashboard']) ? 'active' : '' }}">
-                    <a href="#!" class="nav-link" id="dashboard">
-                        <span class="sidebar-icon">
-                            <svg class="icon icon-xs me-2" fill="none" stroke="currentColor" stroke-width="1.5"
-                                viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="M10.5 6a7.5 7.5 0 107.5 7.5h-7.5V6z"></path>
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="M13.5 10.5H21A7.5 7.5 0 0013.5 3v7.5z"></path>
-                            </svg>
+                <li class="nav-item {{ Request::is(['categories']) ? 'active' : '' }}">
+                    <a href="{{ route('categories.index') }}" class="nav-link d-flex" id="categories">
+                        <span class="sidebar-icon align-self-center me-3 ms-2">
+                            <i class="bi bi-tags h5"></i>
                         </span>
-                        <span class="sidebar-text">Admin</span>
+                        <span class="sidebar-text">Category</span>
                     </a>
                 </li>
             @endrole
