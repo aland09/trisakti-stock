@@ -131,14 +131,14 @@ class CategoryController extends Controller
     {
         $categories = Category::latest()->get();
 
-        // return Datatables::of($categories)
-        // ->addColumn('Action', function ($row) {
-        //     $btn_view = view('layouts.partials.button-view', ['data' => $row->id, 'route' => 'orders.show'])->render();
-        //     $btn_edit = view('layouts.partials.button-edit', ['data' => $row->id, 'route' => 'orders.edit'])->render();
-        //     $btn_delete = view('layouts.partials.button-delete', ['data' => $row->id, 'route' => 'orders'])->render();
-        //     return '<div class="d-flex">' . $btn_view . $btn_edit . $btn_delete . '</div>';
-        // })
-        // ->rawColumns(['Action', 'Status', 'Image'])
-        // ->make(true);
+        return DataTables::of($categories)
+            // ->addColumn('Action', function ($row) {
+            //     $btn_view = view('layouts.partials.button-view', ['data' => $row->id, 'route' => 'orders.show'])->render();
+            //     $btn_edit = view('layouts.partials.button-edit', ['data' => $row->id, 'route' => 'orders.edit'])->render();
+            //     $btn_delete = view('layouts.partials.button-delete', ['data' => $row->id, 'route' => 'orders'])->render();
+            //     return '<div class="d-flex">' . $btn_view . $btn_edit . $btn_delete . '</div>';
+            // })
+            // ->rawColumns(['Action', 'Status', 'Image'])
+            ->make(true);
     }
 }

@@ -25,5 +25,6 @@ Auth::routes();
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 Route::resource('categories', CategoryController::class);
+Route::get('/categories-datatables', [CategoryController::class, 'datatables'])->name('categories.datatables');
 
 Route::middleware('role:admin')->get('/dashboard', [HomeController::class, 'index'])->name('dashboard');
