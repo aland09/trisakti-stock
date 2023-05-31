@@ -6,3 +6,11 @@ table.dataTable th {
 .dataTables_wrapper {
     font-size: 12px;
 }
+
+.dataTables_paginate .pagination .page-link {
+    font-size: 12px;
+}
+
+.dataTables_length select {
+    font-size: 12px;
+}

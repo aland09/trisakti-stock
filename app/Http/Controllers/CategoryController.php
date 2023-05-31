@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CategoryRequest;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -63,7 +64,7 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CategoryRequest $request)
     {
         DB::beginTransaction();
 
@@ -90,7 +91,19 @@ class CategoryController extends Controller
      */
     public function show($id)
     {
-        //
+        $category = Category::findOrFail($id);
+        $data = [
+            'title' => $category->name,
+            'controller' => 'category',
+            'type' => 'Show',
+        ];
+
+        $compact = [
+            'data',
+            'category',
+        ];
+
+        return view('category.form', compact($compact));
     }
 
     /**
@@ -101,7 +114,19 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        //
+        $category = Category::findOrFail($id);
+        $data = [
+            'title' => 'Edit ' . $category->name,
+            'controller' => 'category',
+            'type' => 'Edit',
+        ];
+
+        $compact = [
+            'data',
+            'category',
+        ];
+
+        return view('category.form', compact($compact));
     }
 
     /**
@@ -111,9 +136,27 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(CategoryRequest $request, $id)
     {
-        //
+        DB::beginTransaction();
+
+        try {
+            $data = $request->all();
+            $data['name'] = ucwords($data['name']);
+
+            $category = Category::findOrFail($id);
+            $category->update([
+                'name' => $data['name'],
+                'description' => $data['description'],
+            ]);
+
+            DB::commit();
+
+            return redirect()->route('categories.index')->with('success', 'Success! The data has been updated successfully.');
+        } catch (\Exception $e) {
+            DB::rollback();
+            return redirect()->back()->with('error', $e->getMessage());
+        }
     }
 
     /**
@@ -124,7 +167,19 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        //
+        DB::beginTransaction();
+
+        try {
+            $category = Category::findOrFail($id);
+            $category->delete();
+
+            DB::commit();
+
+            return redirect()->route('categories.index')->with('error', 'Well done! The data deletion process has been completed successfully.');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->route('categories.index')->with('error', $e->getMessage());
+        }
     }
 
     public function datatables()
@@ -132,13 +187,13 @@ class CategoryController extends Controller
         $categories = Category::latest()->get();
 
         return DataTables::of($categories)
-            // ->addColumn('Action', function ($row) {
-            //     $btn_view = view('layouts.partials.button-view', ['data' => $row->id, 'route' => 'orders.show'])->render();
-            //     $btn_edit = view('layouts.partials.button-edit', ['data' => $row->id, 'route' => 'orders.edit'])->render();
-            //     $btn_delete = view('layouts.partials.button-delete', ['data' => $row->id, 'route' => 'orders'])->render();
-            //     return '<div class="d-flex">' . $btn_view . $btn_edit . $btn_delete . '</div>';
-            // })
-            // ->rawColumns(['Action', 'Status', 'Image'])
+            ->addColumn('Action', function ($row) {
+                $btn_view = view('layouts.partials.button-view', ['data' => $row->id, 'route' => 'categories.show'])->render();
+                $btn_edit = view('layouts.partials.button-edit', ['data' => $row->id, 'route' => 'categories.edit'])->render();
+                $btn_delete = view('layouts.partials.button-delete', ['data' => $row->id, 'route' => 'categories.destroy', 'name' => $row->name])->render();
+                return '<div class="d-flex">' . $btn_view . $btn_edit . $btn_delete . '</div>';
+            })
+            ->rawColumns(['Action'])
             ->make(true);
     }
 }

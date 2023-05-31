@@ -42,7 +42,7 @@
     {{-- sidebar --}}
     @include('includes.sidebar')
 
-    <main class="content pe-4 vh-100">
+    <main class="content pe-4 min-vh-100">
         <div class="pe-2">
             @include('includes.header')
 

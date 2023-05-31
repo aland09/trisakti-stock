@@ -52,14 +52,14 @@
                             title: 'Description',
                             data: 'description',
                             name: 'description',
-                            className: 'text-wrap col-2',
+                            className: 'text-wrap col-6',
                         },
-                        // {
-                        //     title: 'Action',
-                        //     data: 'Action',
-                        //     orderable: false,
-                        //     searchable: false,
-                        // }
+                        {
+                            title: 'Action',
+                            data: 'Action',
+                            orderable: false,
+                            searchable: false,
+                        }
                     ]
                 });
             });
