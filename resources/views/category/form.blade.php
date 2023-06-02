@@ -44,15 +44,11 @@
                     <div class="col">
                         <label for="description" class="form-label">Description</label>
                         @if ($category)
-                            <textarea class="form-control summernote @error('description') is-invalid @enderror" id="descriptionEditor"
-                                rows="10" name="description">
-                                {{ $category->description }}
-                            </textarea>
+                            <textarea class="form-control @error('description') is-invalid @enderror" id="descriptionEditor" rows="3"
+                                name="description">{{ $category->description }}</textarea>
                         @else
-                            <textarea class="form-control summernote @error('description') is-invalid @enderror" id="descriptionEditor"
-                                rows="10" name="description">
-                            {{ old('description') }}
-                        </textarea>
+                            <textarea class="form-control @error('description') is-invalid @enderror" id="descriptionEditor" rows="3"
+                                name="description">{{ old('description') }}</textarea>
                         @endif
                         @error('description')
                             <div class="text-danger">{{ $message }}</div>
@@ -73,30 +69,22 @@
         $(document).ready(function() {
             $(document).ready(function() {
                 @if ($data['type'] == 'Show')
-                    $('.summernote').summernote({
-                        tabsize: 2,
-                        height: 80,
-                        toolbar: false,
-                    });
-                    $('.summernote').summernote('disable')
+                    // $('.summernote').summernote({
+                    //     tabsize: 2,
+                    //     height: 80,
+                    //     toolbar: false,
+                    // });
+                    // $('.summernote').summernote('disable')
                     $('input, select, textarea').prop('disabled', true);
                 @else
-                    $('.summernote').summernote({
-                        tabsize: 2,
-                        height: 80,
-                        toolbar: false,
-                    });
+                    // $('.summernote').summernote({
+                    //     tabsize: 2,
+                    //     height: 80,
+                    //     toolbar: false,
+                    // });
                     $('input, select, textarea').prop('disabled', false);
                 @endif
             });
         });
     </script>
-@endpush
-
-@push('custom-css')
-    <style>
-        .note-editor {
-            font-size: 14px;
-        }
-    </style>
 @endpush
