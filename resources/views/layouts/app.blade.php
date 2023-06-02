@@ -9,8 +9,8 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>
-        @if (!empty($title))
-            {{ $title }} - {{ config('app.name', 'Laravel') }}
+        @if (!empty($data['title']))
+            {{ $data['title'] }} - {{ config('app.name', 'Laravel') }}
         @else
             {{ config('app.name', 'Laravel') }}
         @endif
@@ -23,6 +23,15 @@
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 
+    {{-- bootstrap icon --}}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+    {{-- summernote --}}
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+
+    {{-- datatables --}}
+    <link href="{{ asset('assets/vendor/DataTables/datatables.min.css') }}" rel="stylesheet" />
+
     @stack('custom-css')
 </head>
 
@@ -33,7 +42,7 @@
     {{-- sidebar --}}
     @include('includes.sidebar')
 
-    <main class="content pe-4 vh-100">
+    <main class="content pe-4 min-vh-100">
         <div class="pe-2">
             @include('includes.header')
 
@@ -46,6 +55,12 @@
     {{-- jquery --}}
     <script src="https://code.jquery.com/jquery-3.6.3.min.js"
         integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+
+    {{-- summernote --}}
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+
+    {{-- datatables --}}
+    <script src="{{ asset('assets/vendor/DataTables/datatables.min.js') }}"></script>
 
     @stack('custom-js')
 </body>
