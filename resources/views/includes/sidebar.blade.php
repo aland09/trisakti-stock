@@ -49,7 +49,7 @@
                 </a>
             </li>
             @role('user')
-                <li class="nav-item {{ Request::is(['dashboard']) ? 'active' : '' }}">
+                <li class="nav-item {{ Request::is(['dashboard*']) ? 'active' : '' }}">
                     <a href="#!" class="nav-link" id="dashboard">
                         <span class="sidebar-icon">
                             <svg class="icon icon-xs me-2" fill="none" stroke="currentColor" stroke-width="1.5"
@@ -65,12 +65,20 @@
                 </li>
             @endrole
             @role('admin')
-                <li class="nav-item {{ Request::is(['categories']) ? 'active' : '' }}">
+                <li class="nav-item {{ Request::is(['categories*']) ? 'active' : '' }}">
                     <a href="{{ route('categories.index') }}" class="nav-link d-flex" id="categories">
                         <span class="sidebar-icon align-self-center me-3 ms-2">
-                            <i class="bi bi-tags h5"></i>
+                            <i class="bi bi-ui-checks-grid h5"></i>
                         </span>
                         <span class="sidebar-text">Category</span>
+                    </a>
+                </li>
+                <li class="nav-item {{ Request::is(['inventories*']) ? 'active' : '' }}">
+                    <a href="{{ route('inventories.index') }}" class="nav-link d-flex" id="inventories">
+                        <span class="sidebar-icon align-self-center me-3 ms-2">
+                            <i class="bi bi-boxes h5"></i>
+                        </span>
+                        <span class="sidebar-text">Inventory</span>
                     </a>
                 </li>
             @endrole
