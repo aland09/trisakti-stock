@@ -72,11 +72,12 @@ class CategoryController extends Controller
             $data = $request->all();
             $data['name'] = ucwords($data['name']);
 
-            Category::create($data);
+            $category = Category::create($data);
+            $categoryName = $category->name;
 
             DB::commit();
 
-            return redirect()->route('categories.index')->with('success', 'Success! The data has been created successfully.');
+            return redirect()->route('categories.index')->with('success', 'Success! ' . $categoryName . ' has been created successfully.');
         } catch (\Exception $e) {
             DB::rollback();
             return redirect()->back()->with('error', $e->getMessage());
@@ -150,9 +151,11 @@ class CategoryController extends Controller
                 'description' => $data['description'],
             ]);
 
+            $categoryName = $category->name;
+
             DB::commit();
 
-            return redirect()->route('categories.index')->with('success', 'Success! The data has been updated successfully.');
+            return redirect()->route('categories.index')->with('success', 'Success! ' . $categoryName . ' has been updated successfully.');
         } catch (\Exception $e) {
             DB::rollback();
             return redirect()->back()->with('error', $e->getMessage());
@@ -172,10 +175,11 @@ class CategoryController extends Controller
         try {
             $category = Category::findOrFail($id);
             $category->delete();
+            $categoryName = $category->name;
 
             DB::commit();
 
-            return redirect()->route('categories.index')->with('error', 'Well done! The data deletion process has been completed successfully.');
+            return redirect()->route('categories.index')->with('error', 'Well done! ' . $categoryName . ' deletion process has been completed successfully.');
         } catch (\Exception $e) {
             DB::rollBack();
             return redirect()->route('categories.index')->with('error', $e->getMessage());
@@ -187,13 +191,13 @@ class CategoryController extends Controller
         $categories = Category::latest()->get();
 
         return DataTables::of($categories)
-            ->addColumn('Action', function ($row) {
+            ->addColumn('action', function ($row) {
                 $btn_view = view('layouts.partials.button-view', ['data' => $row->id, 'route' => 'categories.show'])->render();
                 $btn_edit = view('layouts.partials.button-edit', ['data' => $row->id, 'route' => 'categories.edit'])->render();
                 $btn_delete = view('layouts.partials.button-delete', ['data' => $row->id, 'route' => 'categories.destroy', 'name' => $row->name])->render();
                 return '<div class="d-flex">' . $btn_view . $btn_edit . $btn_delete . '</div>';
             })
-            ->rawColumns(['Action'])
+            ->rawColumns(['action'])
             ->make(true);
     }
 }

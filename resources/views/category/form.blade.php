@@ -29,7 +29,7 @@
 
                 <div class="row row-cols-1 row-cols-md-1 g-4 mb-3">
                     <div class="col">
-                        <label for="name" class="form-label">Name</label>
+                        <label for="name" class="form-label">Name<span class="text-danger">*</span></label>
                         <input type="text" class="form-control @error('name') is-invalid @enderror" id="name"
                             name="name"
                             @if ($category) value="{{ $category->name }}" @else value="{{ old('name') }}" @endif
@@ -76,6 +76,7 @@
                     // });
                     // $('.summernote').summernote('disable')
                     $('input, select, textarea').prop('disabled', true);
+                    $('#header').prop('disabled', false);
                 @else
                     // $('.summernote').summernote({
                     //     tabsize: 2,
