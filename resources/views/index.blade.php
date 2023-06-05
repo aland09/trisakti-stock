@@ -11,6 +11,8 @@
             <a href="{{ route('categories.create') }}" class="btn btn-primary btn-sm">Create</a>
         @elseif ($data['controller'] == 'Inventory')
             <a href="{{ route('inventories.create') }}" class="btn btn-primary btn-sm">Create</a>
+        @elseif ($data['controller'] == 'Room')
+            <a href="{{ route('rooms.create') }}" class="btn btn-primary btn-sm">Create</a>
         @endif
     </div>
 
@@ -49,6 +51,12 @@
                             data: 'name',
                             name: 'name',
                             className: 'text-wrap col-4',
+                        },
+                        {
+                            title: 'Code',
+                            data: 'code',
+                            name: 'code',
+                            className: 'text-wrap col-1',
                         },
                         {
                             title: 'Description',
@@ -116,6 +124,53 @@
                             className: 'col-2',
                             orderable: false,
                             searchable: false,
+                        },
+                        {
+                            title: 'action',
+                            data: 'action',
+                            orderable: false,
+                            searchable: false,
+                        }
+                    ]
+                });
+            });
+        </script>
+    @elseif ($data['controller'] == 'Room')
+        {{-- Room Index --}}
+        <script>
+            $(document).ready(function() {
+                $('#datatables').DataTable({
+                    processing: true,
+                    serverSide: true,
+                    ajax: '{{ route('rooms.datatables') }}',
+                    columns: [{
+                            title: 'No',
+                            data: '',
+                            name: '',
+                            className: 'text-wrap col-1',
+                            orderable: false,
+                            searchable: false,
+                            render: function(data, type, row, meta) {
+                                return meta.row + 1;
+                            }
+                        },
+                        {
+                            title: 'Name',
+                            data: 'name',
+                            name: 'name',
+                            className: 'text-wrap col-4',
+                        },
+                        {
+                            title: 'Code',
+                            data: 'code',
+                            name: 'code',
+                            className: 'text-wrap col-1',
+                        },
+                        {
+                            title: 'Description',
+                            data: 'description',
+                            name: 'description',
+                            className: 'text-wrap col-6',
                         },
                         {
                             title: 'action',

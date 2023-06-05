@@ -2,19 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CategoryRequest;
-use App\Models\Category;
+use App\Http\Requests\RoomRequest;
+use App\Models\Room;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
 
-class CategoryController extends Controller
+class RoomController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-
     public function __construct()
     {
         $this->middleware('auth');
@@ -23,8 +22,8 @@ class CategoryController extends Controller
     public function index()
     {
         $data = [
-            'title' => 'Category List',
-            'controller' => 'Category',
+            'title' => 'Room List',
+            'controller' => 'Room',
         ];
 
         $compact = [
@@ -42,18 +41,18 @@ class CategoryController extends Controller
     public function create()
     {
         $data = [
-            'title' => 'Create Category',
+            'title' => 'Create Room',
             'type' => 'Create',
         ];
 
-        $category = '';
+        $room = '';
 
         $compact = [
             'data',
-            'category',
+            'room',
         ];
 
-        return view('category.form', compact($compact));
+        return view('room.form', compact($compact));
     }
 
     /**
@@ -62,7 +61,7 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CategoryRequest $request)
+    public function store(RoomRequest $request)
     {
         DB::beginTransaction();
 
@@ -71,12 +70,12 @@ class CategoryController extends Controller
             $data['name'] = ucwords($data['name']);
             $data['code'] = strtoupper($data['code']);
 
-            $category = Category::create($data);
-            $categoryName = $category->name;
+            $room = Room::create($data);
+            $roomName = $room->name;
 
             DB::commit();
 
-            return redirect()->route('categories.index')->with('success', 'Success! ' . strtoupper($categoryName) . ' has been created successfully.');
+            return redirect()->route('rooms.index')->with('success', 'Success! ' . strtoupper($roomName) . ' has been created successfully.');
         } catch (\Exception $e) {
             DB::rollback();
             return redirect()->back()->with('error', $e->getMessage());
@@ -91,19 +90,19 @@ class CategoryController extends Controller
      */
     public function show($id)
     {
-        $category = Category::findOrFail($id);
+        $room = Room::findOrFail($id);
         $data = [
-            'title' => $category->name,
-            'controller' => 'category',
+            'title' => $room->name,
+            'controller' => 'room',
             'type' => 'Show',
         ];
 
         $compact = [
             'data',
-            'category',
+            'room',
         ];
 
-        return view('category.form', compact($compact));
+        return view('room.form', compact($compact));
     }
 
     /**
@@ -114,19 +113,19 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        $category = Category::findOrFail($id);
+        $room = Room::findOrFail($id);
         $data = [
-            'title' => 'Edit ' . $category->name,
-            'controller' => 'category',
+            'title' => 'Edit ' . $room->name,
+            'controller' => 'room',
             'type' => 'Edit',
         ];
 
         $compact = [
             'data',
-            'category',
+            'room',
         ];
 
-        return view('category.form', compact($compact));
+        return view('room.form', compact($compact));
     }
 
     /**
@@ -136,7 +135,7 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(CategoryRequest $request, $id)
+    public function update(RoomRequest $request, $id)
     {
         DB::beginTransaction();
 
@@ -144,18 +143,18 @@ class CategoryController extends Controller
             $data = $request->all();
             $data['name'] = ucwords($data['name']);
 
-            $category = Category::findOrFail($id);
-            $category->update([
+            $room = Room::findOrFail($id);
+            $room->update([
                 'name' => $data['name'],
                 'code' => $data['code'],
                 'description' => $data['description'],
             ]);
 
-            $categoryName = $category->name;
+            $roomName = $room->name;
 
             DB::commit();
 
-            return redirect()->route('categories.index')->with('success', 'Success! ' . strtoupper($categoryName) . ' has been updated successfully.');
+            return redirect()->route('rooms.index')->with('success', 'Success! ' . strtoupper($roomName) . ' has been updated successfully.');
         } catch (\Exception $e) {
             DB::rollback();
             return redirect()->back()->with('error', $e->getMessage());
@@ -173,28 +172,28 @@ class CategoryController extends Controller
         DB::beginTransaction();
 
         try {
-            $category = Category::findOrFail($id);
-            $category->delete();
-            $categoryName = $category->name;
+            $room = Room::findOrFail($id);
+            $room->delete();
+            $roomName = $room->name;
 
             DB::commit();
 
-            return redirect()->route('categories.index')->with('error', 'Well done! ' . strtoupper($categoryName) . ' deletion process has been completed successfully.');
+            return redirect()->route('categories.index')->with('error', 'Well done! ' . strtoupper($roomName) . ' deletion process has been completed successfully.');
         } catch (\Exception $e) {
             DB::rollBack();
-            return redirect()->route('categories.index')->with('error', $e->getMessage());
+            return redirect()->route('rooms.index')->with('error', $e->getMessage());
         }
     }
 
     public function datatables()
     {
-        $categories = Category::latest()->get();
+        $rooms = Room::latest()->get();
 
-        return DataTables::of($categories)
+        return DataTables::of($rooms)
             ->addColumn('action', function ($row) {
-                $btn_view = view('layouts.partials.button-view', ['data' => $row->id, 'route' => 'categories.show'])->render();
-                $btn_edit = view('layouts.partials.button-edit', ['data' => $row->id, 'route' => 'categories.edit'])->render();
-                $btn_delete = view('layouts.partials.button-delete', ['data' => $row->id, 'route' => 'categories.destroy', 'name' => $row->name])->render();
+                $btn_view = view('layouts.partials.button-view', ['data' => $row->id, 'route' => 'rooms.show'])->render();
+                $btn_edit = view('layouts.partials.button-edit', ['data' => $row->id, 'route' => 'rooms.edit'])->render();
+                $btn_delete = view('layouts.partials.button-delete', ['data' => $row->id, 'route' => 'rooms.destroy', 'name' => $row->name])->render();
                 return '<div class="d-flex">' . $btn_view . $btn_edit . $btn_delete . '</div>';
             })
             ->rawColumns(['action'])

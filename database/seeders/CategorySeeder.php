@@ -16,14 +16,46 @@ class CategorySeeder extends Seeder
     public function run()
     {
         $categories = [
-            ['name' => 'ATK', 'description' => 'Deskripsi Alat Tulis Kantor'],
-            ['name' => 'Barang Elektronik', 'description' => 'Deskripsi Barang Elektronik'],
-            ['name' => 'Furniture', 'description' => 'Deskripsi Furniture'],
-            ['name' => 'Alat Kebersihan', 'description' => 'Deskripsi Alat Kebersihan'],
-            ['name' => 'Peralatan Laboraturium', 'description' => 'Deskripsi Peralatan Laboraturium'],
-            ['name' => 'Peralatan Keamanan', 'description' => 'Deskripsi Peralatan Keamanan'],
-            ['name' => 'Perlengkapan Olahraga', 'description' => 'Deskripsi Perlengkapan Olahraga'],
-            ['name' => 'Peralatan Musik', 'description' => 'Deskripsi Peralatan Musik'],
+            [
+                'name' => 'Alat Tulis Kantor',
+                'code' => 'ATK',
+                'description' => 'Deskripsi Alat Tulis Kantor'
+            ],
+            [
+                'name' => 'Barang Elektronik',
+                'code' => 'ELC',
+                'description' => 'Deskripsi Barang Elektronik'
+            ],
+            [
+                'name' => 'Furniture',
+                'code' => 'FUR',
+                'description' => 'Deskripsi Furniture'
+            ],
+            [
+                'name' => 'Alat Kebersihan',
+                'code' => 'KEB',
+                'description' => 'Deskripsi Alat Kebersihan'
+            ],
+            [
+                'name' => 'Peralatan Laboraturium',
+                'code' => 'LAB',
+                'description' => 'Deskripsi Peralatan Laboraturium'
+            ],
+            [
+                'name' => 'Peralatan Keamanan',
+                'code' => 'SEC',
+                'description' => 'Deskripsi Peralatan Keamanan'
+            ],
+            [
+                'name' => 'Perlengkapan Olahraga',
+                'code' => 'OLG',
+                'description' => 'Deskripsi Perlengkapan Olahraga'
+            ],
+            [
+                'name' => 'Peralatan Musik',
+                'code' => 'MSK',
+                'description' => 'Deskripsi Peralatan Musik'
+            ],
         ];
 
         Category::insert($categories);
