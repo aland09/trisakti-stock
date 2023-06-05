@@ -7,7 +7,7 @@
 
     <div class="d-flex justify-content-between mt-3 mb-4">
         @if ($data['type'] == 'Create')
-            <h4>Create Category</h4>
+            <h4>{{ $data['title'] }}</h4>
         @elseif($data['type'] == 'Edit')
             <h4>Edit {{ $category->name }}</h4>
         @elseif($data['type'] == 'Show')
@@ -27,7 +27,7 @@
 
                 @csrf
 
-                <div class="row row-cols-1 row-cols-md-1 g-4 mb-3">
+                <div class="row row-cols-1 row-cols-md-2 g-4 mb-3">
                     <div class="col">
                         <label for="name" class="form-label">Name<span class="text-danger">*</span></label>
                         <input type="text" class="form-control @error('name') is-invalid @enderror" id="name"
@@ -35,6 +35,16 @@
                             @if ($category) value="{{ $category->name }}" @else value="{{ old('name') }}" @endif
                             autofocus>
                         @error('name')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <div class="col">
+                        <label for="code" class="form-label">Code<span class="text-danger">*</span></label>
+                        <input type="text" class="form-control @error('code') is-invalid @enderror" id="code"
+                            name="code"
+                            @if ($category) value="{{ $category->code }}" @else value="{{ old('code') }}" @endif
+                            autofocus>
+                        @error('code')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>

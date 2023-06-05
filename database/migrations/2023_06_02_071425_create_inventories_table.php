@@ -18,7 +18,8 @@ return new class extends Migration
             $table->string('name')->nullable();
             $table->string('code')->unique()->nullable();
             $table->string('slug')->nullable();
-            $table->string('category_id')->nullable();
+            $table->integer('category_id')->nullable();
+            $table->integer('room_id')->nullable();
             $table->integer('quantity')->nullable();
             $table->string('satuan')->nullable();
             $table->string('image')->nullable();

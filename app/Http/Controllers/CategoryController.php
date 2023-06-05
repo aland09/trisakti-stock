@@ -4,9 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CategoryRequest;
 use App\Models\Category;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
 use Yajra\DataTables\Facades\DataTables;
 
 class CategoryController extends Controller
@@ -71,13 +69,14 @@ class CategoryController extends Controller
         try {
             $data = $request->all();
             $data['name'] = ucwords($data['name']);
+            $data['code'] = strtoupper($data['code']);
 
             $category = Category::create($data);
             $categoryName = $category->name;
 
             DB::commit();
 
-            return redirect()->route('categories.index')->with('success', 'Success! ' . $categoryName . ' has been created successfully.');
+            return redirect()->route('categories.index')->with('success', 'Success! ' . strtoupper($categoryName) . ' has been created successfully.');
         } catch (\Exception $e) {
             DB::rollback();
             return redirect()->back()->with('error', $e->getMessage());
@@ -148,6 +147,7 @@ class CategoryController extends Controller
             $category = Category::findOrFail($id);
             $category->update([
                 'name' => $data['name'],
+                'code' => $data['code'],
                 'description' => $data['description'],
             ]);
 
@@ -155,7 +155,7 @@ class CategoryController extends Controller
 
             DB::commit();
 
-            return redirect()->route('categories.index')->with('success', 'Success! ' . $categoryName . ' has been updated successfully.');
+            return redirect()->route('categories.index')->with('success', 'Success! ' . strtoupper($categoryName) . ' has been updated successfully.');
         } catch (\Exception $e) {
             DB::rollback();
             return redirect()->back()->with('error', $e->getMessage());
@@ -179,7 +179,7 @@ class CategoryController extends Controller
 
             DB::commit();
 
-            return redirect()->route('categories.index')->with('error', 'Well done! ' . $categoryName . ' deletion process has been completed successfully.');
+            return redirect()->route('categories.index')->with('error', 'Well done! ' . strtoupper($categoryName) . ' deletion process has been completed successfully.');
         } catch (\Exception $e) {
             DB::rollBack();
             return redirect()->route('categories.index')->with('error', $e->getMessage());
