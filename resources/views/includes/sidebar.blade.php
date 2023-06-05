@@ -81,6 +81,14 @@
                         <span class="sidebar-text">Inventory</span>
                     </a>
                 </li>
+                <li class="nav-item {{ Request::is(['rooms*']) ? 'active' : '' }}">
+                    <a href="{{ route('rooms.index') }}" class="nav-link d-flex" id="rooms">
+                        <span class="sidebar-icon align-self-center me-3 ms-2">
+                            <i class="bi bi-building h5"></i>
+                        </span>
+                        <span class="sidebar-text">Room</span>
+                    </a>
+                </li>
             @endrole
         </ul>
     </div>
