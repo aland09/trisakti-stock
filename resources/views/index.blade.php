@@ -100,6 +100,12 @@
                             className: 'text-wrap col-4',
                         },
                         {
+                            title: 'Code',
+                            data: 'code',
+                            name: 'code',
+                            className: 'text-wrap col-2',
+                        },
+                        {
                             title: 'Category',
                             data: 'category',
                             name: 'category',

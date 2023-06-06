@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\InventoryRequest;
 use App\Models\Category;
 use App\Models\Inventory;
+use App\Models\Room;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -45,6 +46,7 @@ class InventoryController extends Controller
     public function create()
     {
         $categories = Category::all();
+        $rooms = Room::all();
 
         $data = [
             'title' => 'Create Inventory',
@@ -57,6 +59,7 @@ class InventoryController extends Controller
             'data',
             'inventory',
             'categories',
+            'rooms',
         ];
 
         return view('inventory.form', compact($compact));
@@ -73,11 +76,17 @@ class InventoryController extends Controller
         DB::beginTransaction();
 
         try {
+            $category = Category::findOrFail($request->category_id);
+            $room = Room::findOrFail($request->room_id);
+
+            $categoryCode = $category->code;
+            $roomCode = $room->code;
+
             $data = $request->all();
             $data['name'] = ucwords($data['name']);
             $data['slug'] = Str::slug($data['name']);
             $data['image'] = $request->file('image')->store('inventory', 'public');
-            $data['code'] = 'INV' . substr(date('Y'), -2) . '000' . mt_rand(0, 9999);
+            $data['code'] = $categoryCode . '-' . $roomCode . '-' . date('Y') . mt_rand(0, 9999);
 
             $inventory = Inventory::create($data);
             $inventoryName = $inventory->name;
@@ -101,6 +110,7 @@ class InventoryController extends Controller
     {
         $inventory = Inventory::where('slug', $slug)->firstOrFail();
         $categories = Category::all();
+        $rooms = Room::all();
 
         $data = [
             'title' => $inventory->name,
@@ -112,6 +122,7 @@ class InventoryController extends Controller
             'data',
             'categories',
             'inventory',
+            'rooms',
         ];
 
         return view('inventory.form', compact($compact));
@@ -127,6 +138,7 @@ class InventoryController extends Controller
     {
         $inventory = Inventory::where('slug', $slug)->firstOrFail();
         $categories = Category::all();
+        $rooms = Room::all();
 
         $data = [
             'title' => 'Edit ' . $inventory->name,
@@ -138,6 +150,7 @@ class InventoryController extends Controller
             'data',
             'categories',
             'inventory',
+            'rooms',
         ];
 
         return view('inventory.form', compact($compact));
@@ -155,9 +168,16 @@ class InventoryController extends Controller
         DB::beginTransaction();
 
         try {
+            $category = Category::findOrFail($request->category_id);
+            $room = Room::findOrFail($request->room_id);
+
+            $categoryCode = $category->code;
+            $roomCode = $room->code;
+
             $data = $request->all();
             $data['name'] = ucwords($data['name']);
             $data['slug'] = Str::slug($data['name']);
+            $data['code'] = $categoryCode . '-' . $roomCode . '-' . date('Y') . mt_rand(0, 9999);
 
             $inventory = Inventory::where('slug', $slug)->firstOrFail();
 
@@ -175,6 +195,8 @@ class InventoryController extends Controller
             $inventory->update([
                 'name' => $data['name'],
                 'category_id' => $data['category_id'],
+                'room_id' => $data['room_id'],
+                'code' => $data['code'],
                 'quantity' => $data['quantity'],
                 'satuan' => $data['satuan'],
                 'description' => $data['description'],

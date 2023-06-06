@@ -56,15 +56,6 @@
                         @enderror
                     </div>
                     <div class="col">
-                        <label for="code" class="form-label">Code</label>
-                        <input type="text" class="form-control @error('code') is-invalid @enderror" id="code"
-                            disabled
-                            @if ($inventory) value="{{ $inventory->code }}" @else value="{{ old('code') }}" @endif>
-                        @error('code')
-                            <div class="text-danger">{{ $message }}</div>
-                        @enderror
-                    </div>
-                    <div class="col">
                         <label for="category">Category<span class="text-danger">*</span></label>
                         <select class="form-select" aria-label="Default select example" name="category_id" required>
                             <option selected disabled>Choose Category</option>
@@ -84,9 +75,38 @@
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>
+                    <div class="col">
+                        <label for="room">Room<span class="text-danger">*</span></label>
+                        <select class="form-select" aria-label="Default select example" name="room_id" required>
+                            <option selected disabled>Choose Room</option>
+                            @foreach ($rooms as $room)
+                                @if ($inventory)
+                                    <option value="{{ $room->id }}"
+                                        {{ $inventory->room_id == $room->id ? 'selected' : '' }}>
+                                        {{ $room->name }}</option>
+                                @else
+                                    <option value="{{ $room->id }}"
+                                        {{ old('room_id') == $room->id ? 'selected' : '' }}>
+                                        {{ $room->name }}</option>
+                                @endif
+                            @endforeach
+                        </select>
+                        @error('room_id')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
                 </div>
 
-                <div class="row row-cols-1 row-cols-md-3 g-4 mb-3">
+                <div class="row row-cols-2 row-cols-md-4 g-4 mb-3">
+                    <div class="col">
+                        <label for="code" class="form-label">Code</label>
+                        <input type="text" class="form-control @error('code') is-invalid @enderror" id="code"
+                            disabled
+                            @if ($inventory) value="{{ $inventory->code }}" @else value="{{ old('code') }}" @endif>
+                        @error('code')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
                     <div class="col">
                         <label for="quantity" class="form-label">Quantity<span class="text-danger">*</span></label>
                         <input required type="number" class="form-control @error('quantity') is-invalid @enderror"
@@ -159,6 +179,7 @@
                 $('input, select, textarea').prop('disabled', true);
                 $('#header').prop('disabled', false);
             @else
+                // $('input, select, textarea').prop('required', false);
                 $('input, select, textarea').prop('disabled', false);
                 $('#code').prop('disabled', true);
             @endif
