@@ -107,15 +107,17 @@
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>
-                    <div class="col">
-                        <label for="quantity" class="form-label">Quantity<span class="text-danger">*</span></label>
-                        <input required type="number" class="form-control @error('quantity') is-invalid @enderror"
-                            id="quantity" name="quantity"
-                            @if ($inventory) value="{{ $inventory->quantity }}" @else value="{{ old('quantity') }}" @endif>
-                        @error('quantity')
-                            <div class="text-danger">{{ $message }}</div>
-                        @enderror
-                    </div>
+                    @if ($data['type'] != 'Create')
+                        <div class="col">
+                            <label for="quantity" class="form-label">Quantity<span class="text-danger">*</span></label>
+                            <input required type="number" class="form-control @error('quantity') is-invalid @enderror"
+                                id="quantity" name="quantity"
+                                @if ($inventory) value="{{ $inventory->quantity }}" @else value="{{ old('quantity') }}" @endif>
+                            @error('quantity')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    @endif
                     <div class="col">
                         <label for="satuan" class="form-label">Satuan<span class="text-danger">*</span></label>
                         <input required type="text" class="form-control @error('satuan') is-invalid @enderror"

@@ -25,15 +25,17 @@ class InventoryRequest extends FormRequest
     {
         if ($this->isMethod('put')) {
             $image = 'nullable';
+            $quantity = 'required';
         } else {
             $image = 'required';
+            $quantity = 'nullable';
         }
 
         return [
             'name' => 'required',
             'category_id' => 'required|integer|exists:categories,id',
             'room_id' => 'required|integer|exists:rooms,id',
-            'quantity' => 'required|integer',
+            'quantity' => $quantity, 'integer',
             'satuan' => 'required|',
             'image' => $image . '|mimes:jpg,jpeg,png|max:1024',
         ];
