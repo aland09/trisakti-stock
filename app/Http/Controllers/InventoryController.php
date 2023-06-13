@@ -53,6 +53,7 @@ class InventoryController extends Controller
             'controller' => 'Inventory',
             'type' => 'Create',
         ];
+
         $inventory = '';
 
         $compact = [
