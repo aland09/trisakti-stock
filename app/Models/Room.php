@@ -11,6 +11,7 @@ class Room extends Model
 
     protected $guarded = ['id'];
 
+    // relation
     public function inventory()
     {
         return $this->hasMany(Inventory::class, 'room_id');
