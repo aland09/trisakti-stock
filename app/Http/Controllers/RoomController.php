@@ -178,7 +178,7 @@ class RoomController extends Controller
 
             DB::commit();
 
-            return redirect()->route('categories.index')->with('error', 'Well done! ' . strtoupper($roomName) . ' deletion process has been completed successfully.');
+            return redirect()->route('rooms.index')->with('error', 'Well done! ' . strtoupper($roomName) . ' deletion process has been completed successfully.');
         } catch (\Exception $e) {
             DB::rollBack();
             return redirect()->route('rooms.index')->with('error', $e->getMessage());

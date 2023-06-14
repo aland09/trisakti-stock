@@ -186,6 +186,7 @@
                 $('input, select, textarea').prop('required', true);
                 $('input, select, textarea').prop('disabled', false);
                 $('#code').prop('disabled', true);
+                $('#image').prop('required', false);
             @endif
         });
     </script>
