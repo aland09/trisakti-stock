@@ -73,6 +73,14 @@
                         <span class="sidebar-text">Category</span>
                     </a>
                 </li>
+                <li class="nav-item {{ Request::is(['rooms*']) ? 'active' : '' }}">
+                    <a href="{{ route('rooms.index') }}" class="nav-link d-flex" id="rooms">
+                        <span class="sidebar-icon align-self-center me-3 ms-2">
+                            <i class="bi bi-building h5"></i>
+                        </span>
+                        <span class="sidebar-text">Room</span>
+                    </a>
+                </li>
                 <li class="nav-item {{ Request::is(['inventories*']) ? 'active' : '' }}">
                     <a href="{{ route('inventories.index') }}" class="nav-link d-flex" id="inventories">
                         <span class="sidebar-icon align-self-center me-3 ms-2">
@@ -81,12 +89,12 @@
                         <span class="sidebar-text">Inventory</span>
                     </a>
                 </li>
-                <li class="nav-item {{ Request::is(['rooms*']) ? 'active' : '' }}">
-                    <a href="{{ route('rooms.index') }}" class="nav-link d-flex" id="rooms">
+                <li class="nav-item {{ Request::is(['transactions*']) ? 'active' : '' }}">
+                    <a href="{{ route('transactions.index') }}" class="nav-link d-flex" id="transactions">
                         <span class="sidebar-icon align-self-center me-3 ms-2">
-                            <i class="bi bi-building h5"></i>
+                            <i class="bi bi-arrow-left-right h5"></i>
                         </span>
-                        <span class="sidebar-text">Room</span>
+                        <span class="sidebar-text">Transaction</span>
                     </a>
                 </li>
             @endrole
