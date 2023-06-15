@@ -57,7 +57,8 @@
                     </div>
                     <div class="col">
                         <label for="category">Category<span class="text-danger">*</span></label>
-                        <select class="form-select" aria-label="Default select example" name="category_id" required>
+                        <select class="form-select @error('category_id') is-invalid @enderror"
+                            aria-label="Default select example" name="category_id" required>
                             <option selected disabled>Choose Category</option>
                             @foreach ($categories as $category)
                                 @if ($inventory)
@@ -77,7 +78,8 @@
                     </div>
                     <div class="col">
                         <label for="room">Room<span class="text-danger">*</span></label>
-                        <select class="form-select" aria-label="Default select example" name="room_id" required>
+                        <select class="form-select @error('room_id') is-invalid @enderror"
+                            aria-label="Default select example" name="room_id" required>
                             <option selected disabled>Choose Room</option>
                             @foreach ($rooms as $room)
                                 @if ($inventory)
@@ -143,10 +145,10 @@
                     <div class="col">
                         <label for="description" class="form-label">Description</label>
                         @if ($inventory)
-                            <textarea class="form-control @error('description') is-invalid @enderror" id="description" rows="3"
+                            <textarea class="form-control @error('description') is-invalid @enderror" id="description" rows="2"
                                 name="description">{{ $inventory->description }}</textarea>
                         @else
-                            <textarea class="form-control @error('description') is-invalid @enderror" id="description" rows="3"
+                            <textarea class="form-control @error('description') is-invalid @enderror" id="description" rows="2"
                                 name="description">{{ old('description') }}</textarea>
                         @endif
                         @error('description')
@@ -181,9 +183,10 @@
                 $('input, select, textarea').prop('disabled', true);
                 $('#header').prop('disabled', false);
             @else
-                // $('input, select, textarea').prop('required', false);
+                $('input, select, textarea').prop('required', true);
                 $('input, select, textarea').prop('disabled', false);
                 $('#code').prop('disabled', true);
+                $('#image').prop('required', false);
             @endif
         });
     </script>

@@ -13,6 +13,8 @@
             <a href="{{ route('inventories.create') }}" class="btn btn-primary btn-sm">Create</a>
         @elseif ($data['controller'] == 'Room')
             <a href="{{ route('rooms.create') }}" class="btn btn-primary btn-sm">Create</a>
+        @elseif ($data['controller'] == 'Transaction')
+            <a href="{{ route('transactions.create') }}" class="btn btn-primary btn-sm">Create</a>
         @endif
     </div>
 
@@ -177,6 +179,65 @@
                             data: 'description',
                             name: 'description',
                             className: 'text-wrap col-6',
+                        },
+                        {
+                            title: 'action',
+                            data: 'action',
+                            orderable: false,
+                            searchable: false,
+                        }
+                    ]
+                });
+            });
+        </script>
+    @elseif ($data['controller'] == 'Transaction')
+        {{-- Transaction Index --}}
+        <script>
+            $(document).ready(function() {
+                $('#datatables').DataTable({
+                    processing: true,
+                    serverSide: true,
+                    ajax: '{{ route('transactions.datatables') }}',
+                    columns: [{
+                            title: 'No',
+                            data: '',
+                            name: '',
+                            className: 'text-wrap col-1',
+                            orderable: false,
+                            searchable: false,
+                            render: function(data, type, row, meta) {
+                                return meta.row + 1;
+                            }
+                        },
+                        {
+                            title: 'Date',
+                            data: 'date',
+                            name: 'date',
+                            className: 'text-wrap col-2',
+                        },
+                        {
+                            title: 'Inventory',
+                            data: 'inventory_name',
+                            name: 'inventory_name',
+                            className: 'text-wrap col-3',
+                        },
+                        {
+                            title: 'Status',
+                            data: 'status',
+                            name: 'status',
+                            className: 'text-wrap col-1',
+                        },
+                        {
+                            title: 'Quantity',
+                            data: 'quantity',
+                            name: 'quantity',
+                            className: 'text-wrap col-1 text-center',
+                        },
+                        {
+                            title: 'Stock',
+                            data: 'stock',
+                            name: 'stock',
+                            className: 'text-wrap col-1',
                         },
                         {
                             title: 'action',

@@ -4,6 +4,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\RoomController;
+use App\Http\Controllers\TransactionController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -34,5 +35,8 @@ Route::get('/inventories-datatables', [InventoryController::class, 'datatables']
 
 Route::resource('rooms', RoomController::class);
 Route::get('/rooms-datatables', [RoomController::class, 'datatables'])->name('rooms.datatables');
+
+Route::resource('transactions', TransactionController::class);
+Route::get('/transactions-datatables', [TransactionController::class, 'datatables'])->name('transactions.datatables');
 
 Route::middleware('role:admin')->get('/dashboard', [HomeController::class, 'index'])->name('dashboard');

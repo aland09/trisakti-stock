@@ -11,8 +11,14 @@ class Inventory extends Model
 
     protected $guarded = ['id'];
 
+    // relation
     public function category()
     {
         return $this->belongsTo(Category::class, 'category_id', 'id');
+    }
+
+    public function transaction()
+    {
+        return $this->hasOne(Transaction::class, 'inventory_id');
     }
 }

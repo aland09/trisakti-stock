@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Room extends Model
+class Transaction extends Model
 {
     use HasFactory;
 
@@ -14,6 +14,6 @@ class Room extends Model
     // relation
     public function inventory()
     {
-        return $this->hasMany(Inventory::class, 'room_id');
+        return $this->belongsTo(Inventory::class, 'inventory_id', 'id');
     }
 }

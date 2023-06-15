@@ -6,6 +6,7 @@ use App\Http\Requests\InventoryRequest;
 use App\Models\Category;
 use App\Models\Inventory;
 use App\Models\Room;
+use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -53,6 +54,7 @@ class InventoryController extends Controller
             'controller' => 'Inventory',
             'type' => 'Create',
         ];
+
         $inventory = '';
 
         $compact = [
@@ -226,9 +228,15 @@ class InventoryController extends Controller
 
         try {
             $inventory = Inventory::where('slug', $slug)->firstOrFail();
-            $inventory->delete();
-            Storage::delete($inventory->image);
-            $inventoryName = $inventory->name;
+            $transactions = Transaction::where('inventory_id', $inventory->id)->exists();
+
+            if ($transactions) {
+                return redirect()->route('inventories.index')->with('error', "Sorry, The item cannot be deleted as it has associated transactions.");
+            } else {
+                Storage::delete($inventory->image);
+                $inventoryName = $inventory->name;
+                $inventory->delete();
+            }
 
             DB::commit();
 
@@ -245,7 +253,12 @@ class InventoryController extends Controller
 
         return DataTables::of($inventories)
             ->addColumn('category', function ($row) {
-                $category = $row->category->name;
+                $category = "";
+                if ($row->category) {
+                    $category = $row->category->name;
+                } else {
+                    $category = "-";
+                }
                 return $category;
             })
             ->addColumn('image', function ($row) {

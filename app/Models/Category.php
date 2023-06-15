@@ -11,6 +11,7 @@ class Category extends Model
 
     protected $guarded = ['id'];
 
+    // relation
     public function inventory()
     {
         return $this->hasMany(Inventory::class, 'category_id');

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\RoomRequest;
+use App\Models\Inventory;
 use App\Models\Room;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
@@ -173,12 +174,22 @@ class RoomController extends Controller
 
         try {
             $room = Room::findOrFail($id);
+            $inventories = Inventory::where('room_id', $id)->get();
+            foreach ($inventories as $inventory) {
+                // $inventory->delete();
+                $code = $inventory->code;
+                $code = substr_replace($code, 'XX', 4, 2);
+                $inventory->update([
+                    'room_id' => null,
+                    'code' => $code,
+                ]);
+            }
             $room->delete();
             $roomName = $room->name;
 
             DB::commit();
 
-            return redirect()->route('categories.index')->with('error', 'Well done! ' . strtoupper($roomName) . ' deletion process has been completed successfully.');
+            return redirect()->route('rooms.index')->with('error', 'Well done! ' . strtoupper($roomName) . ' deletion process has been completed successfully.');
         } catch (\Exception $e) {
             DB::rollBack();
             return redirect()->route('rooms.index')->with('error', $e->getMessage());
