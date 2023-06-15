@@ -217,8 +217,8 @@
                         },
                         {
                             title: 'Inventory',
-                            data: 'inventory',
-                            name: 'inventory',
+                            data: 'inventory_name',
+                            name: 'inventory_name',
                             className: 'text-wrap col-3',
                         },
                         {

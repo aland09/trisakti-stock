@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CategoryRequest;
 use App\Models\Category;
+use App\Models\Inventory;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -173,7 +174,17 @@ class CategoryController extends Controller
         DB::beginTransaction();
 
         try {
+            $inventories = Inventory::where('category_id', $id)->get();
             $category = Category::findOrFail($id);
+            foreach ($inventories as $inventory) {
+                // $inventory->delete();
+                $code = $inventory->code;
+                $code = substr_replace($code, 'XXX', 0, 3);
+                $inventory->update([
+                    'category_id' => null,
+                    'code' => $code,
+                ]);
+            }
             $category->delete();
             $categoryName = $category->name;
 
@@ -194,7 +205,7 @@ class CategoryController extends Controller
             ->addColumn('action', function ($row) {
                 $btn_view = view('layouts.partials.button-view', ['data' => $row->id, 'route' => 'categories.show'])->render();
                 $btn_edit = view('layouts.partials.button-edit', ['data' => $row->id, 'route' => 'categories.edit'])->render();
-                $btn_delete = view('layouts.partials.button-delete', ['data' => $row->id, 'route' => 'categories.destroy', 'name' => $row->name])->render();
+                $btn_delete = view('layouts.partials.button-delete', ['data' => $row->id, 'route' => 'categories.destroy', 'name' => $row->name, 'messages' => ''])->render();
                 return '<div class="d-flex">' . $btn_view . $btn_edit . $btn_delete . '</div>';
             })
             ->rawColumns(['action'])

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\RoomRequest;
+use App\Models\Inventory;
 use App\Models\Room;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
@@ -173,6 +174,16 @@ class RoomController extends Controller
 
         try {
             $room = Room::findOrFail($id);
+            $inventories = Inventory::where('room_id', $id)->get();
+            foreach ($inventories as $inventory) {
+                // $inventory->delete();
+                $code = $inventory->code;
+                $code = substr_replace($code, 'XX', 4, 2);
+                $inventory->update([
+                    'room_id' => null,
+                    'code' => $code,
+                ]);
+            }
             $room->delete();
             $roomName = $room->name;
 

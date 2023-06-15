@@ -18,7 +18,7 @@ class InventorySeeder extends Seeder
         Inventory::insert([
             [
                 'name' => 'Pulpen',
-                'code' => 'ATK-RI-20239876',
+                'code' => 'ATK-R1-20239876',
                 'slug' => 'pulpen',
                 'category_id' => 1,
                 'room_id' => 1,

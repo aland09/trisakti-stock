@@ -43,8 +43,6 @@ class TransactionController extends Controller
     public function create()
     {
         $inventories = Inventory::all();
-        // $inventories = Inventory::first();
-        // dd($inventories);
 
         $data = [
             'title' => 'Create Transaction',
@@ -74,11 +72,13 @@ class TransactionController extends Controller
 
         try {
             $data = $request->all();
-            $data['uuid'] = 'TRS' . mt_rand(0, 9999);
+            $data['uuid'] = 'TRS' . '-' . mt_rand(0, 9999);
+
+            $inventory = Inventory::findOrFail($data['inventory_id']);
+            $data['inventory_name'] = $inventory->name;
 
             $transaction = Transaction::create($data);
 
-            $inventory = Inventory::findOrFail($data['inventory_id']);
             if ($data['status'] == 'masuk') {
                 $inventory->quantity += $data['quantity'];
             } else if ($data['status'] == 'keluar' || $data['status'] == 'pinjam') {
@@ -215,10 +215,6 @@ class TransactionController extends Controller
         // dd($transactions);
 
         return DataTables::of($transactions)
-            ->addColumn('inventory', function ($row) {
-                $inventory = $row->inventory->name;
-                return $inventory;
-            })
             ->addColumn('status', function ($row) {
                 $inventory = '';
                 if ($row->status == 'masuk') {
