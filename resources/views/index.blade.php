@@ -1,6 +1,10 @@
 @extends('layouts.app')
-
+@push('custom-css')
+<link href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.dataTables.min.css" rel="stylesheet" />
+@endpush
 @section('content')
+
+
     <div class="mt-3">
         @include('layouts.partials.messages')
     </div>
@@ -36,6 +40,7 @@
                 $('#datatables').DataTable({
                     processing: true,
                     serverSide: true,
+                    
                     ajax: '{{ route('categories.datatables') }}',
                     columns: [{
                             title: 'No',
@@ -197,6 +202,10 @@
                 $('#datatables').DataTable({
                     processing: true,
                     serverSide: true,
+                    dom: 'Bfrtip',
+                    buttons: [
+                                'copy', 'csv', 'excel', 'pdf', 'print','colvis'
+                            ],
                     ajax: '{{ route('transactions.datatables') }}',
                     columns: [{
                             title: 'No',
