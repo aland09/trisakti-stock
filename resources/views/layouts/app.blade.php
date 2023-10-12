@@ -32,7 +32,7 @@
     {{-- datatables --}}
     <link href="{{ asset('assets/vendor/DataTables/datatables.min.css') }}" rel="stylesheet" />
     
-
+    <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/sweetalert2@10.10.1/dist/sweetalert2.min.css'>
     @stack('custom-css')
 </head>
 
@@ -46,7 +46,7 @@
     <main class="content pe-4 min-vh-100">
         <div class="pe-2">
             @include('includes.header')
-
+            @include('sweetalert::alert')
             @yield('content')
 
             @include('includes.footer')
@@ -71,7 +71,8 @@
     <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.colVis.min.js"></script>
 
     
-
+        {{--swal--}}
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.6/dist/sweetalert2.all.min.js"></script>
 
 
 

@@ -40,13 +40,14 @@
         <ul class="nav flex-column pt-3 pt-md-0">
             <li class="nav-item">
                 <a href="#!" class="py-3 px-3 h4 fw-bolder d-flex align-items-center">
-                    {{-- <span class="sidebar-icon">
-                        <img src="{{ asset('assets/img/logo/pemprov_dki.png') }}" height="30" width="30"
+                    <span class="sidebar-icon">
+                        <img src="{{ asset('assets/img/brand/light.png') }}" height="50" width="50"
                             alt="Volt Logo">
                     </span>
-                    <span class="mt-1 ms-3 sidebar-text fs-5 fw-bolder">E H I B A H</span> --}}
+                    {{--<span class="mt-1 ms-3 sidebar-text fs-5 fw-bolder">Trisakti Stock Management System</span>--}} 
                     {{ config('app.name', 'Laravel') }}
                 </a>
+                
             </li>
             @role('user')
                 <li class="nav-item {{ Request::is(['dashboard*']) ? 'active' : '' }}">
@@ -95,6 +96,22 @@
                             <i class="bi bi-arrow-left-right h5"></i>
                         </span>
                         <span class="sidebar-text">Transaction</span>
+                    </a>
+                </li>
+                <li class="nav-item {{ Request::is(['users*']) ? 'active' : '' }}">
+                    <a href="{{ route('users.index') }}" class="nav-link d-flex" id="users">
+                        <span class="sidebar-icon align-self-center me-3 ms-2">
+                            <i class="bi bi-people h5"></i>
+                        </span>
+                        <span class="sidebar-text">Users</span>
+                    </a>
+                </li>
+                <li class="nav-item {{ Request::is(['roles*']) ? 'active' : '' }}">
+                    <a href="{{ route('roles.index') }}" class="nav-link d-flex" id="roles">
+                        <span class="sidebar-icon align-self-center me-3 ms-2">
+                            <i class="bi bi-person-gear h5"></i>
+                        </span>
+                        <span class="sidebar-text">Roles</span>
                     </a>
                 </li>
             @endrole

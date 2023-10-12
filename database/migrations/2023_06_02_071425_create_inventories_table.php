@@ -23,6 +23,7 @@ return new class extends Migration
             $table->integer('quantity')->nullable();
             $table->string('satuan')->nullable();
             $table->string('image')->nullable();
+            $table->string('no_box')->nullable();
             $table->text('description')->nullable();
             $table->timestamps();
         });

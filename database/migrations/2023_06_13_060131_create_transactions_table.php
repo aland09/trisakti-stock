@@ -16,9 +16,10 @@ return new class extends Migration
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
             $table->string('uuid')->unique()->nullable();
+            $table->foreignId('user_id')->constrained('users');
             $table->date('date')->nullable();
-            $table->integer('inventory_id')->nullable();
             $table->string('inventory_name')->nullable();
+            $table->integer('inventory_id')->nullable();
             $table->integer('quantity')->nullable();
             $table->string('status')->nullable();
             $table->text('notes')->nullable();

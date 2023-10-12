@@ -20,6 +20,7 @@ class TransactionSeeder extends Seeder
                 'uuid' => 'TRS-3213',
                 'date' => '2023-06-13',
                 'inventory_id' => '1',
+                'user_id' => 1,
                 'inventory_name' => 'Pulpen',
                 'quantity' => 36,
                 'status' => 'masuk',

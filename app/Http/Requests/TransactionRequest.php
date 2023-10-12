@@ -27,6 +27,7 @@ class TransactionRequest extends FormRequest
             'date' => 'required',
             'inventory_id' => 'required',
             'quantity' => 'required',
+            'user_id' => 'required',
             'status' => 'required',
         ];
     }

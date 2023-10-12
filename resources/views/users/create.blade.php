@@ -1,0 +1,94 @@
+@extends('layouts.app')
+
+@section('content')
+<div class="d-flex justify-content-between mt-5 mb-4">
+    <h3 class="fw-bold">Tambah Pengguna</h3>
+</div>
+<div class="card p-5 rounded-2 mb-5">
+    <form method="POST" action="{{ route('users.store') }}" id="user-form">
+        @csrf
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            <div class="col mb-3">
+                <label for="name" class="form-label">Nama</label>
+                <input value="{{ old('name') }}" 
+                    type="text" 
+                    class="form-control" 
+                    name="name" 
+                    required>
+
+                @if ($errors->has('name'))
+                    <span class="text-danger text-left">{{ $errors->first('name') }}</span>
+                @endif
+            </div>
+            <div class="col mb-3">
+                <label for="password" class="form-label">Kata Sandi</label>
+                <input value="{{ old('password') }}" 
+                    type="password" 
+                    class="form-control" 
+                    name="password" 
+                    required>
+
+                @if ($errors->has('password'))
+                    <span class="text-danger text-left">{{ $errors->first('password') }}</span>
+                @endif
+            </div>
+            <div class="col mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input value="{{ old('email') }}"
+                    type="email" 
+                    class="form-control" 
+                    name="email" 
+                    required>
+                @if ($errors->has('email'))
+                    <span class="text-danger text-left">{{ $errors->first('email') }}</span>
+                @endif
+            </div>
+            <div class="col mb-3">
+                <label for="username" class="form-label">Username</label>
+                <input value="{{ old('username') }}"
+                    type="text" 
+                    class="form-control" 
+                    name="username" 
+                    required>
+                @if ($errors->has('username'))
+                    <span class="text-danger text-left">{{ $errors->first('username') }}</span>
+                @endif
+            </div>
+            {{-- <div class="col mb-3">
+                <label for="nik" class="form-label">NIK</label>
+                <input value="{{ old('nik') }}"
+                    type="number" 
+                    class="form-control" 
+                    name="nik" 
+                    required>
+                @if ($errors->has('nik'))
+                    <span class="text-danger text-left">{{ $errors->first('nik') }}</span>
+                @endif
+            </div>
+            <div class="col mb-3">
+                <label class="my-1 me-2" for="skpd">SKPD Koordinator <span class="text-danger">*</span></label>
+                <select class="form-select @error('skpd_id') is-invalid @enderror" id="skpd_id" aria-label="Default select example" name="skpd_id">
+                    <option selected disabled>Pilih SKPD</option>
+                    @foreach ($skpds as $skpd)
+                        <option value="{{ $skpd->id }}" {{ old('skpd_id') == $skpd->id ? 'selected' : '' }} >{{ $skpd->name }}</option>
+                    @endforeach
+                </select>
+                @error('skpd_id')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
+            </div> --}}
+            <div class="col">
+                <button type="submit" class="btn btn-primary me-2">Simpan</button>
+                <a href="{{ route('users.index') }}" class="btn btn-secondary">Kembali</a>
+            </div>
+        </div>
+    </form>
+</div>
+
+@endsection
+
+@push('custom-js')
+    <!-- Laravel Javascript Validation -->
+    <script type="text/javascript" src="{{ url('vendor/jsvalidation/js/jsvalidation.js')}}"></script>
+    {{--{!! JsValidator::formRequest('App\Http\Requests\UserRequest', '#user-form') !!}--}}
+@endpush

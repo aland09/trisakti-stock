@@ -5,6 +5,9 @@ namespace Database\Seeders;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Artisan;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 class UserSeeder extends Seeder
 {
@@ -17,18 +20,29 @@ class UserSeeder extends Seeder
     {
         $admin = User::create([
             'name' => 'Admin Role',
+            'username' => 'admin',
             'email' => 'admin@demo.com',
             'password' => bcrypt('12341234'),
         ]);
 
-        $admin->assignRole('admin');
+        Artisan::call('permission:create-permission-routes');
+        // $admin->assignRole('admin');
 
-        $user = User::create([
-            'name' => 'User Role',
-            'email' => 'user@demo.com',
-            'password' => bcrypt('12341234'),
-        ]);
+        $role = Role::create(['name' => 'admin']);
 
-        $user->assignRole('user');
+        $permissions = Permission::pluck('id', 'id')->all();
+
+        $role->syncPermissions($permissions);
+
+        $admin->assignRole([$role->id]);
+
+        
+        // $user = User::create([
+        //     'name' => 'User Role',
+        //     'email' => 'user@demo.com',
+        //     'password' => bcrypt('12341234'),
+        // ]);
+
+        // $user->assignRole('user');
     }
 }

@@ -26,9 +26,11 @@
                 @endif
 
                 @csrf
-
+                
                 <div class="row row-cols-1 row-cols-md-3 g-4 mb-4">
                     <div class="col">
+                        <input type="hidden" value="{{$user_id}}" name="user_id">
+
                         <label for="date" class="form-label">Date<span class="text-danger">*</span></label>
                         <input type="date" class="form-control @error('date') is-invalid @enderror" id="date"
                             name="date"
@@ -73,6 +75,7 @@
                     </div>
                 </div>
 
+                
                 <div class="row row-cols-1 row-cols-md-2 g-4 mb-3">
                     <div class="col">
                         <label for="status" class="form-label">Status<span class="text-danger">*</span></label>
