@@ -47,8 +47,13 @@ class LoginController extends Controller
 
     //     return redirect()->route('home');
     // }
+    
+    public function username()
+    {
+        return 'username';
+    }
 
-    public function login(Request $request)
+    public function authenticated(Request $request)
     {   
         $input = $request->all();
   
