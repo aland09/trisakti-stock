@@ -23,14 +23,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::get('/', function () {
-//     return view('home');
-// });
+Route::get('/', function () {
+    return view('home2');
+});
 
 Auth::routes();
 
 
-Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 Route::group(['middleware' => ['auth', 'permission']], function () {
     Route::get('/dashboard', [HomeController::class, 'index'])->name('dashboard');
