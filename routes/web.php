@@ -32,7 +32,7 @@ Auth::routes();
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
-Route::group(['middleware' => ['auth', 'permission']], function () {
+// Route::group(['middleware' => ['auth', 'permission']], function () {
     Route::get('/dashboard', [HomeController::class, 'index'])->name('dashboard');
     Route::resource('categories', CategoryController::class);
     Route::get('/categories-datatables', [CategoryController::class, 'datatables'])->name('categories.datatables');
@@ -58,4 +58,4 @@ Route::group(['middleware' => ['auth', 'permission']], function () {
     Route::resource('transactions', TransactionController::class);
     Route::get('/transactions-datatables', [TransactionController::class, 'datatables'])->name('transactions.datatables');
     
-});
+// });
